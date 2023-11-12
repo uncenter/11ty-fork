@@ -1,4 +1,4 @@
-import test from "ava";
+import { expect, test } from "vitest";
 import TemplateConfig from "../src/TemplateConfig.js";
 import url from "../src/Filters/Url.js";
 
@@ -7,10 +7,10 @@ test("Test url filter passing in pathPrefix from config", async (t) => {
   await eleventyConfig.init();
 
   let pp = eleventyConfig.getConfig().pathPrefix;
-  t.is(pp, "/");
+  expect(pp).toEqual("/");
 
-  t.is(url("test", pp), "test");
-  t.is(url("/test", pp), "/test");
+  expect(url("test", pp)).toEqual("test");
+  expect(url("/test", pp)).toEqual("/test");
 });
 
 test("Test url filter without passing in pathPrefix", async (t) => {
@@ -19,18 +19,17 @@ test("Test url filter without passing in pathPrefix", async (t) => {
 
   let urlFilter = eleventyConfig.userConfig.getFilter("url");
 
-  t.is(urlFilter("test"), "test");
-  t.is(urlFilter("/test"), "/test");
+  expect(urlFilter("test")).toEqual("test");
+  expect(urlFilter("/test")).toEqual("/test");
 });
 
 test("Test url filter with passthrough urls", (t) => {
   // via https://gist.github.com/mxpv/034933deeebb26b62f14
-  t.is(url("http://foo.com/blah_blah", ""), "http://foo.com/blah_blah");
-  t.is(url("http://foo.com/blah_blah/", ""), "http://foo.com/blah_blah/");
-  t.is(url("http://foo.com/blah_blah_(wikipedia)", ""), "http://foo.com/blah_blah_(wikipedia)");
-  t.is(
-    url("http://foo.com/blah_blah_(wikipedia)_(again)", ""),
-    "http://foo.com/blah_blah_(wikipedia)_(again)"
+  expect(url("http://foo.com/blah_blah", "")).toEqual("http://foo.com/blah_blah");
+  expect(url("http://foo.com/blah_blah/", "")).toEqual("http://foo.com/blah_blah/");
+  expect(url("http://foo.com/blah_blah_(wikipedia)", "")).toEqual("http://foo.com/blah_blah_(wikipedia)");
+  expect(
+    url("http://foo.com/blah_blah_(wikipedia)_(again)", "")).toEqual("http://foo.com/blah_blah_(wikipedia)_(again)"
   );
   t.is(url("http://www.example.com/wpstyle/?p=364", ""), "http://www.example.com/wpstyle/?p=364");
   t.is(
