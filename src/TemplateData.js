@@ -332,7 +332,7 @@ class TemplateData {
 					objectPathTargetString,
 				)
 			) {
-				throw new Error("Reserved keyword used for global data file!");
+				throw new Error(`Reserved keyword ${objectPathTargetString} used in global data file!`);
 			}
 
 			// if two global files have the same path (but different extensions)
