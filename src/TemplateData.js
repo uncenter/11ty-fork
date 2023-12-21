@@ -327,6 +327,14 @@ class TemplateData {
 			// is guaranteed to work but is signifivcantly slower.
 			let objectPathTargetString = objectPathTarget.join(path.sep);
 
+			if (
+				["content", "pagination", "collections", "page", "eleventy"].includes(
+					objectPathTargetString,
+				)
+			) {
+				throw new Error("Reserved keyword used for global data file!");
+			}
+
 			// if two global files have the same path (but different extensions)
 			// and conflict, let’s merge them.
 			if (dataFileConflicts[objectPathTargetString]) {
